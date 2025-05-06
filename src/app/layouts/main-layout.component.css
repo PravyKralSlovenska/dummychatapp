@@ -1,0 +1,18 @@
+body {
+    padding: 15px;
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 1rem;    
+}
+
+/* 
+main > * {
+    border: 2px solid black;
+} 
+*/

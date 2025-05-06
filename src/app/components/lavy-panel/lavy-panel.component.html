@@ -1,0 +1,3 @@
+<div *ngIf="currentUsers">
+    <app-user *ngFor="let user of currentUsers.users" [User]="user" />
+</div>

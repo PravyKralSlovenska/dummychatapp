@@ -1,0 +1,8 @@
+main {
+    width: 25%;
+}
+
+.form-element {
+    display: flex;
+    flex-direction: column;
+}

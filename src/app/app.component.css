@@ -1,0 +1,12 @@
+main {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 50px 1fr;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 1rem;
+}
+
+app-horna-listina {
+  grid-row: 1;
+  grid-column: 1 / span 3;
+}

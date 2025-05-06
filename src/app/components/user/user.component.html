@@ -1,0 +1,10 @@
+<main (click)="changeVisibility()">
+    <p>
+        {{User?.firstName}} {{User?.lastName}} {{User?.email}}
+    </p>
+</main>
+
+<div *ngIf="visibility">
+    <button (click)="setDetailsUser()">Zobraz detail</button>
+    <button (click)="openChat()">Začni chat</button>
+</div>

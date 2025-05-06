@@ -1,0 +1,14 @@
+<main>
+    <h2>Prihlas sa</h2>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-element">
+            <label>Meno</label>
+            <input type="text" formControlName="meno">
+        </div>
+        <div class="form-element">
+            <label for="">Priezvisko</label>
+            <input type="text" formControlName="priezvisko">
+        </div>
+        <button type="submit" [disabled]="!form.valid">Prihlasit sa</button>
+    </form>
+</main>
