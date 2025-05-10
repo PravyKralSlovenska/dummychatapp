@@ -1,49 +1,18 @@
 body {
-  padding: 15px;
-  gap: 1rem;
-  display: flex;
-  flex-direction: column;
+    padding: 15px;
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
-.app-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  padding: 0;
-  margin: 0;
+main {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 1rem;    
 }
 
-.app-header {
-  padding: 10px 15px;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #ddd;
-}
-
-.app-main {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  gap: 1rem;
-  flex: 1;
-  overflow: hidden;
-  padding: 15px;
-}
-
-.left-panel,
-.center-panel,
-.right-panel {
-  overflow-y: auto;
-  height: 100%;
-  border-radius: 5px;
-}
-
-.left-panel {
-  background-color: #f9f9f9;
-}
-
-.center-panel {
-  background-color: #ffffff;
-}
-
-.right-panel {
-  background-color: #f9f9f9;
-}
+/* 
+main > * {
+    border: 2px solid black;
+} 
+*/

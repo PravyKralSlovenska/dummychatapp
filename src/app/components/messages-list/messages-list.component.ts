@@ -1,27 +1,29 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ApickaService } from '../../services/apicka.service';
+import { CommonModule } from '@angular/common';
+import { ChatMessagesService } from '../../services/chat-messages.service';
+import { ChatMessage } from '../../models/chatMessage.interface';
 
 @Component({
   selector: 'app-messages-list',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './messages-list.component.html',
   styleUrl: './messages-list.component.css'
 })
 export class MessagesListComponent {
-  userMessages: string[] | Object | null = [];
+  chatMessages: ChatMessage[] = [];
+  total = 0;
 
-  constructor(private route: ActivatedRoute, private api: ApickaService) { }
+  constructor(private ChatMessagesService: ChatMessagesService) {
+    // this.ChatMessagesService.Message.subscribe((sprava: ChatMessage | null) => {
+    //   if (sprava) {
+    //     this.chatMessages.push(sprava);
+    //     this.total++;
+    //   }
+    // });
 
-  ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.loadUser(params.get("id")!);      
-    });
-  }
-
-  loadUser(id: string): void {
-    this.api.getDummyUserByID(id).subscribe(user => {
-      console.log(user);
+    this.ChatMessagesService.ListMessage.subscribe((spravy: ChatMessage[]) => {
+      this.chatMessages = spravy;
+      this.total = spravy.length;
     });
   }
 }

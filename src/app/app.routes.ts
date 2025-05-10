@@ -4,6 +4,7 @@ import { MessagesListComponent } from './components/messages-list/messages-list.
 import { MainLayoutComponent } from './layouts/main-layout.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginPageComponent } from './components/login-page/login-page.component';
+import { PravyPanelComponent } from './components/pravy-panel/pravy-panel.component';
 
 export const routes: Routes = [
     {
@@ -17,8 +18,12 @@ export const routes: Routes = [
                 component: DetailsComponent
             },
             {
-                path: "list-of-messages/:id/:?username", 
+                path: "list-of-messages", 
                 component: MessagesListComponent
+            },
+            {
+                path: "chat/:id/:?username",
+                component: PravyPanelComponent
             }
         ]
     },

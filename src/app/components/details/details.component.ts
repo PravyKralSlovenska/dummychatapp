@@ -3,6 +3,7 @@ import { DetailsService } from '../../services/details.service';
 import { User } from '../../models/user.interface';
 import { CommonModule } from '@angular/common';
 import { ApickaService } from '../../services/apicka.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-details',
@@ -13,7 +14,7 @@ import { ApickaService } from '../../services/apicka.service';
 export class DetailsComponent {
   public user: User | null = null;
 
-  constructor(private details: DetailsService, private api: ApickaService) { }
+  constructor(private details: DetailsService, private api: ApickaService, private router: Router) { }
   
   ngOnInit(): void {
     this.details.currentUser.subscribe(async user => {
@@ -30,5 +31,9 @@ export class DetailsComponent {
         this.user = user;
       }    
     });
+  }
+
+  closeDetails(): void {
+    this.router.navigate(["/list-of-messages"]);
   }
 }

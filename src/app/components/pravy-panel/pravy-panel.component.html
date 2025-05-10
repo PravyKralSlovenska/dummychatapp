@@ -1,44 +1,16 @@
-<div class="chat-container">
-  <div *ngIf="currentChatUser; else noChatSelected" class="chat-panel">
-    <div class="chat-header">
-      <div class="chat-user">
-        <span class="chat-title">Chat with</span>
-        <span class="chat-username"
-          >{{ currentChatUser.firstName }} {{ currentChatUser.lastName }}</span
-        >
-      </div>
-      <button (click)="endChat()" class="end-chat-btn">End Chat</button>
-    </div>
+<div *ngIf="receiverUser" class="container">
+  <button (click)="endChat()">ukoncit chat s {{receiverUser.firstName}} {{receiverUser.lastName}}</button>
+  <ul>
+    <li *ngFor="let message of receiverUser.chatHistory">
+      {{ message.timestamp }} {{ message.senderId }}: {{ message.text }}
+    </li>
+  </ul>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input type="text" placeholder="napis spravu" formControlName="text" />
+    <button [disabled]="!form.valid">odoslat</button>
+  </form>
+</div>
 
-    <div class="chat-messages">
-      <div
-        *ngFor="let message of messages"
-        [class.user-message]="!message.isResponse"
-        [class.response-message]="message.isResponse"
-        class="message"
-      >
-        <div class="message-content">{{ message.text }}</div>
-        <div class="message-time">{{ formatTimestamp(message.timestamp) }}</div>
-      </div>
-    </div>
-
-    <div class="chat-input">
-      <textarea
-        [(ngModel)]="newMessage"
-        (keydown)="onKeyDown($event)"
-        placeholder="Type your message..."
-        class="message-input"
-      ></textarea>
-      <button (click)="sendMessage()" class="send-button">Pošli</button>
-    </div>
-  </div>
-
-  <ng-template #noChatSelected>
-    <div class="no-chat">
-      <div class="no-chat-message">
-        <p>No active chat</p>
-        <p class="hint">Select a user from the left panel to start a chat</p>
-      </div>
-    </div>
-  </ng-template>
+<div *ngIf="!receiverUser" class="container">
+  <h2>Vyberte si uzivatela</h2>
 </div>

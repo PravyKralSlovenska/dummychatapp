@@ -1,27 +1,4 @@
-<div class="top-bar">
-  <div class="user-info">
-    <h2 *ngIf="user">{{ user.firstName }} {{ user.lastName }}</h2>
-    <p *ngIf="loginTime" class="login-time">
-      Login time: {{ formatDate(loginTime) }}
-    </p>
-  </div>
-
-  <div class="stats">
-    <div class="stat-item">
-      <span class="stat-label">Clicks:</span>
-      <span class="stat-value">{{ clickCount }}</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-label">Characters typed:</span>
-      <span class="stat-value">{{ charCount }}</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-label">Chats started:</span>
-      <span class="stat-value">{{ chatCount }}</span>
-    </div>
-  </div>
-
-  <div class="actions">
-    <button (click)="logout()" class="logout-btn">LOG OUT</button>
-  </div>
+<div>
+    <h1>{{user.firstName}} {{user.lastName}}</h1>
+    <button (click)="logout()">LOG OUT</button>
 </div>

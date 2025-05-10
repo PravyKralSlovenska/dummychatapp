@@ -1,3 +1,4 @@
+import { ChatMessage, ListMessages } from "./chatMessage.interface";
 import { Zippo } from "./zippo.interface";
 
 export interface User {
@@ -30,8 +31,8 @@ export interface User {
         stateCode: string;
         postalCode: string;
         coordinates: {
-        lat: number;
-        lng: number;
+            lat: number;
+            lng: number;
         };
         country: string;
     };
@@ -50,16 +51,16 @@ export interface User {
         name: string;
         title: string;
         address: {
-        address: string;
-        city: string;
-        state: string;
-        stateCode: string;
-        postalCode: string;
-        coordinates: {
-            lat: number;
-            lng: number;
-        };
-        country: string;
+            address: string;
+            city: string;
+            state: string;
+            stateCode: string;
+            postalCode: string;
+            coordinates: {
+                lat: number;
+                lng: number;
+            };
+            country: string;
         };
     };
     ein: string;
@@ -71,4 +72,5 @@ export interface User {
         network: string;
     };
     role: string;
+    chatHistory: ChatMessage[];
 }

@@ -1,4 +1,5 @@
 <main *ngIf="user">
+    <button (click)="closeDetails()">Zatvorit</button>
     <h3>Testy</h3>
     <p><strong>Test Pohlavie:</strong> {{ user.testPohlavie }}</p>
     <p><strong>Test postove cislo:</strong> {{ user.testAdresa['post code'] }}</p>

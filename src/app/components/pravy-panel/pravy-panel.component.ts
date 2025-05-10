@@ -1,82 +1,65 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ChatService } from '../../services/chat.service';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ChatMessage } from '../../models/chatMessage.interface';
+import { ChatMessagesService } from '../../services/chat-messages.service';
 import { User } from '../../models/user.interface';
-import { UserTrackingService } from '../../services/user-tracking.service';
-import { ChatMessage } from '../../models/message.interface';
+import { Router } from '@angular/router';
+import { ApickaService } from '../../services/apicka.service';
 
 @Component({
   selector: 'app-pravy-panel',
-  imports: [CommonModule, FormsModule],
-  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './pravy-panel.component.html',
   styleUrl: './pravy-panel.component.css'
 })
-export class PravyPanelComponent implements OnInit {
-  currentChatUser: User | null = null;
-  messages: ChatMessage[] = [];
-  newMessage: string = '';
+export class PravyPanelComponent {
+  receiverUser: User | null = null;
+  prihlasenyUser: User = JSON.parse(localStorage.getItem("prihlasenyUser") || "{}");
+  // chatMessages: ChatMessage[] = this.receiverUser?.chatHistory.texts || [];
 
-  constructor(
-    private chatService: ChatService,
-    private userTracking: UserTrackingService
-  ) { }
+  form = new FormGroup({
+    text: new FormControl('')
+  });
 
-  ngOnInit() {
-    this.chatService.currentChatUser$.subscribe(user => {
-      this.currentChatUser = user;
-    });
-
-    this.chatService.currentChatMessages$.subscribe(messages => {
-      this.messages = messages;
-      // Scroll to bottom when new messages arrive
-      setTimeout(() => this.scrollToBottom(), 0);
-    });
-  }
-
-  sendMessage() {
-    if (!this.newMessage.trim() || !this.currentChatUser) {
-      return;
-    }
-
-    this.userTracking.incrementClicks();
-
-    this.chatService.sendMessage(this.newMessage).subscribe(
-      response => {
-        // Process response from API
-        this.chatService.processResponse(response);
-
-        // Clear message input
-        this.newMessage = '';
-      },
-      error => {
-        console.error('Error sending message:', error);
-        alert('Failed to send message. Please try again.');
+  constructor(private ChatMessagesService: ChatMessagesService, private route: Router, private api: ApickaService) {
+    this.ChatMessagesService.Message.subscribe((sprava: ChatMessage | null) => {
+      if (sprava && this.receiverUser) {
+        this.receiverUser.chatHistory.push(sprava);
+        console.log(this.receiverUser.chatHistory);
       }
-    );
+    });
+
+    this.ChatMessagesService.ChatUser.subscribe((user: User | null) => {
+      if (user) {
+        if (!user.chatHistory) {
+          user.chatHistory = [];
+        }
+        this.receiverUser = user;
+      }
+      console.log(user);
+    });
   }
 
-  endChat() {
-    this.userTracking.incrementClicks();
-    this.chatService.endChat();
+  vlozSpravu(text: string): void {
+    const sprava: ChatMessage = {
+      senderId: this.prihlasenyUser.id,
+      receiverId: this.receiverUser!.id,
+      text: text,
+      timestamp: new Date().toLocaleString('en-GB')
+    };
+
+    this.ChatMessagesService.addMessage(sprava);
   }
 
-  onKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
-      this.sendMessage();
-    }
+  onSubmit(): void {
+    this.vlozSpravu(this.form.value.text!);
+    this.ChatMessagesService.postPost(this.form.value.text!);
+    this.form.reset();
   }
 
-  formatTimestamp(date: Date): string {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  }
-
-  private scrollToBottom() {
-    const chatContainer = document.querySelector('.chat-messages');
-    if (chatContainer) {
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
+  endChat(): void {
+    this.route.navigate(["/list-of-messages", this.receiverUser!.id, `${this.receiverUser!.firstName}-${this.receiverUser!.lastName}`]);
+    this.receiverUser = null;
   }
 }

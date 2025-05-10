@@ -1,1 +1,12 @@
-<p>messages-list works!</p>
+<div>
+  <h3>Vsetky poslane spravy:</h3>
+  <p><strong>Total:</strong> {{ total }}</p>
+  <div class="grid">
+    <div class="grid-item" *ngFor="let message of chatMessages">
+      <p><strong>Sender:</strong> {{ message.senderId }}</p>
+      <p><strong>Receiver:</strong> {{ message.receiverId }}</p>
+      <p><strong>Message:</strong> {{ message.text }}</p>
+      <p><strong>Timestamp:</strong> {{ message.timestamp }}</p>
+    </div>
+  </div>
+</div>

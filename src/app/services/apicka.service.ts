@@ -13,7 +13,6 @@ export class ApickaService {
   private readonly dummyURL = "https://dummyjson.com/users";
   private readonly genderURL = "https://api.genderize.io";
   private readonly zippoURL = "https://api.zippopotam.us/us/";
-  private readonly postURL = "";
 
   constructor(private http: HttpClient) { }
 

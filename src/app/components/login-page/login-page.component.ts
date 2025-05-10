@@ -21,9 +21,8 @@ export class LoginPageComponent {
     this.auth.logout();
   }
 
-  async onSubmit(): Promise<boolean> {
-    const isLoggedIn = await this.auth.login(this.form.value.meno!, this.form.value.priezvisko!);
-    if (isLoggedIn) {
+  onSubmit(): boolean {
+    if (this.auth.login(this.form.value.meno!, this.form.value.priezvisko!)) {
       this.router.navigate(['']);
       return true;
     }
