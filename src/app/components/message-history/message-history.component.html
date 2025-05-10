@@ -1,0 +1,32 @@
+<div class="history-container">
+  <h2>Chat History</h2>
+
+  <div *ngIf="allMessages.length === 0" class="no-messages">
+    <p>No messages yet. Start a chat from the left panel!</p>
+  </div>
+
+  <div *ngIf="allMessages.length > 0" class="message-list">
+    <div *ngFor="let message of allMessages" class="history-item">
+      <div class="message-header">
+        <span *ngIf="!message.isResponse" class="direction">
+          <strong>You</strong> to
+          <strong
+            >{{ message.recipient.firstName }}
+            {{ message.recipient.lastName }}</strong
+          >
+        </span>
+        <span *ngIf="message.isResponse" class="direction">
+          <strong
+            >{{ message.sender.firstName }}
+            {{ message.sender.lastName }}</strong
+          >
+          to <strong>You</strong>
+        </span>
+        <span class="timestamp">{{ formatTimestamp(message.timestamp) }}</span>
+      </div>
+      <div class="message-body">
+        {{ message.text }}
+      </div>
+    </div>
+  </div>
+</div>

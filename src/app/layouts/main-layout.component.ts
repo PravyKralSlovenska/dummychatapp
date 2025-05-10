@@ -5,24 +5,28 @@ import { LavyPanelComponent } from '../components/lavy-panel/lavy-panel.componen
 import { PravyPanelComponent } from '../components/pravy-panel/pravy-panel.component'
 
 @Component({
-	selector: 'app-main-layout',
+    selector: 'app-main-layout',
     styleUrl: "./main-layout.component.css",
-	standalone: true,
-	imports: [RouterOutlet, HornaListinaComponent, LavyPanelComponent, PravyPanelComponent],
-	template: `
-		<body>
-            <header>
+    standalone: true,
+    imports: [RouterOutlet, HornaListinaComponent, LavyPanelComponent, PravyPanelComponent],
+    template: `
+		<div class="app-container">
+            <header class="app-header">
                 <app-horna-listina />
             </header>
             
-            <main>
-                <app-lavy-panel />
-                <div>
+            <main class="app-main">
+                <div class="left-panel">
+                    <app-lavy-panel />
+                </div>
+                <div class="center-panel">
                     <router-outlet />
                 </div>
-                <app-pravy-panel />
+                <div class="right-panel">
+                    <app-pravy-panel />
+                </div>
             </main>
-        </body>
+        </div>
 	`
 })
-export class MainLayoutComponent {}
+export class MainLayoutComponent { }

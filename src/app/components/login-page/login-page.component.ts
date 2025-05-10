@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 })
 export class LoginPageComponent {
   form = new FormGroup({
-    meno: new FormControl(''),
-    priezvisko: new  FormControl('')
+    meno: new FormControl('Emily'),
+    priezvisko: new FormControl('Johnson')
   });
 
   constructor(private router: Router, private auth: AuthServiceService) { }
@@ -21,8 +21,9 @@ export class LoginPageComponent {
     this.auth.logout();
   }
 
-  onSubmit(): boolean {
-    if (this.auth.login(this.form.value.meno!, this.form.value.priezvisko!)) {
+  async onSubmit(): Promise<boolean> {
+    const isLoggedIn = await this.auth.login(this.form.value.meno!, this.form.value.priezvisko!);
+    if (isLoggedIn) {
       this.router.navigate(['']);
       return true;
     }

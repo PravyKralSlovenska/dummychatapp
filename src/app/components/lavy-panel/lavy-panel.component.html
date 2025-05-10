@@ -1,3 +1,22 @@
-<div *ngIf="currentUsers">
-    <app-user *ngFor="let user of currentUsers.users" [User]="user" />
+<div class="user-list">
+  <h2>Users</h2>
+
+  <div
+    class="user-item"
+    *ngFor="let user of users"
+    (click)="selectUser(user)"
+    [class.selected]="selectedUser?.id === user.id"
+  >
+    <div class="user-info">
+      <div class="user-name">{{ user.firstName }} {{ user.lastName }}</div>
+      <div class="user-email">{{ user.email }}</div>
+    </div>
+
+    <div class="user-actions" *ngIf="selectedUser?.id === user.id">
+      <button (click)="showDetails(user)" class="detail-btn">
+        Zobraz detail
+      </button>
+      <button (click)="startChat(user)" class="chat-btn">Začni chat</button>
+    </div>
+  </div>
 </div>
